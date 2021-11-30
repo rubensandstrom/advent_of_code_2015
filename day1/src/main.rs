@@ -6,32 +6,37 @@ fn main() {
     println!("{}", first_basement(&input).unwrap());
 }
 
-fn floor_counter( s: &str ) -> i32 {
 
-    let mut count = 0; 
+fn floor_counter(s: &str) -> i32 {
+    let mut count = 0;
     for c in s.chars() {
         match c {
-            '(' => { count += 1; }
-            ')' => { count -= 1; }
+            '(' => {
+                count += 1;
+            }
+            ')' => {
+                count -= 1;
+            }
             _ => {}
         }
     }
     count
 }
 
-fn first_basement( s: &str ) -> Option<i32> {
-
-    let mut count = 0; 
-    for (i, c) in s.chars()
-                   .enumerate() 
-                   {
+fn first_basement(s: &str) -> Option<i32> {
+    let mut count = 0;
+    for (i, c) in s.chars().enumerate() {
         match c {
-            '(' => { count += 1; }
-            ')' => { count -= 1; }
+            '(' => {
+                count += 1;
+            }
+            ')' => {
+                count -= 1;
+            }
             _ => {}
         }
         if count == -1 {
-            return Some(i as i32 + 1)
+            return Some(i as i32 + 1);
         }
     }
     None
