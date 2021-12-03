@@ -1,72 +1,32 @@
 use std::fs;
 
 fn main() {
-    let input = fs::read_to_string("../input").expect("Something went wrong!");
-    println!("{}", floor_counter(&input));
-    println!("{}", first_basement(&input).unwrap());
-}
+    let input = fs::read_to_string("input").expect("Couldn't read file");
 
+    let input: Vec<i32> = input
+        .trim()
+        .chars()
+        .map(|x| match x {
+            '(' => 1,
+            ')' => -1,
+            _ => 0,
+        })
+        .collect();
 
-fn floor_counter(s: &str) -> i32 {
-    let mut count = 0;
-    for c in s.chars() {
-        match c {
-            '(' => {
-                count += 1;
-            }
-            ')' => {
-                count -= 1;
-            }
-            _ => {}
+    // Part 1
+    let part_one: i32 = input.iter().sum::<i32>();
+    println!("{:?}", part_one);
+
+    // Part two
+    let mut part_two = 0;
+    let mut sum = 0;
+
+    for i in input {
+        sum += i;
+        part_two += 1;
+        if sum == -1 {
+            break;
         }
     }
-    count
-}
-
-fn first_basement(s: &str) -> Option<i32> {
-    let mut count = 0;
-    for (i, c) in s.chars().enumerate() {
-        match c {
-            '(' => {
-                count += 1;
-            }
-            ')' => {
-                count -= 1;
-            }
-            _ => {}
-        }
-        if count == -1 {
-            return Some(i as i32 + 1);
-        }
-    }
-    None
-}
-
-#[cfg(test)]
-mod test {
-    use super::*;
-    #[test]
-    fn test1() {
-        assert_eq!(floor_counter("((("), 3);
-    }
-    #[test]
-    fn test2() {
-        assert_eq!(floor_counter("((()"), 2);
-    }
-    #[test]
-    fn test3() {
-        assert_eq!(floor_counter("((()))))"), -2);
-    }
-    #[test]
-    fn test4() {
-        assert_eq!(first_basement("((())))").unwrap(), 7);
-    }
-    #[test]
-    fn test5() {
-        assert_eq!(first_basement(")").unwrap(), 1);
-    }
-    #[test]
-    fn test6() {
-        assert_eq!(first_basement("((()))(()))").unwrap(), 11);
-    }
+    println!("{}", part_two);
 }
