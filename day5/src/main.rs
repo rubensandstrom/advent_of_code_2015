@@ -2,7 +2,7 @@ use std::collections::HashSet;
 use std::fs;
 fn main() {
     let input: String = fs::read_to_string("input").expect("Couldn't read file.");
-    let mut input: Vec<&str> = input.trim().lines().collect();
+    let input: Vec<&str> = input.trim().lines().collect();
 
     println!("{}", input.len());
     let mut v_one: Vec<&str> = Vec::new();
@@ -58,5 +58,38 @@ fn main() {
 
     println!("{}", v_three.len());
 
+    // Part two-
+
+    println!("{}", input.len());
+    let mut vec_one = Vec::new();
+
+    let mut flag = false;
+    for i in &input {
+        for j in 2..i.len() {
+            if i.chars().nth(j).unwrap() == i.chars().nth(j - 2).unwrap() {
+                flag = true
+            }
+
+        }
+        if flag { vec_one.push(i) }
+        flag = false;
+    }
+
+    println!("{}", vec_one.len());
+
+    let mut vec_two = Vec::new();
+
+    let mut flag = false;
+    for i in vec_one {
+        for j in 0..i.len()-3 {
+            if i[j+2..i.len()].contains(&i[j..=j+1]) {
+                flag = true;
+            }
+        }
+        if flag { vec_two.push(i); }
+        flag = false;
+    }
+
+    println!("{:?}", vec_two.len());
 
 }
